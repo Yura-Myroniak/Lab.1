@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Завдання</title>
+    <style>
+      .highlight {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h3>Завдання 1.</h3>
+    <p>Це звичайний HTML абзац.</p>
+    <p id="myName">Привіт мене звати Олександр, студент групи ІПЗ-22</p>
+    <script language="JavaScript">
+      document.querySelector('#myName').textContent =
+        'Привіт мене звати Мироняк Юрій Юрійович, студент групи ІПЗ-22';
+    </script>
+    <p>Знову звичайний HTML абзац.</p>
+    <form>
+      <input
+        type="button"
+        value="Click me"
+        onClick="alert('Я народився 20.08.2006 року в місті Івано-Франківськ.')"
+      />
+    </form>
+
+    <hr />
+
+    <h3>Завдання 2.</h3>
+    <form>
+      <input type="button" value="task2" onclick="task2()" />
+    </form>
+
+    <h3>Завдання 3</h3>
+    <form id="main_form">
+      <input
+        type="text"
+        size="100"
+        value="onClick"
+        onclick="fun('Відбувся клік на текстовому елементі форми');"
+      /><br />
+      <input
+        type="text"
+        size="100"
+        value="onSelect"
+        onchange="fun('Зміст текстового поля форми змінений');"
+      /><br />
+      <input
+        type="text"
+        size="100"
+        id="t_res"
+        onmouseout="fun('Курсор вийшов за межі елемента');"
+      />
+      <p>onMouseOut</p>
+      <input
+        type="text"
+        size="100"
+        value="onMouseOut"
+        onmauseover="fun1('Курсор залишив текстовий елемент форми');"
+      /><br />
+      <input type="text" size="100" id="t_res2" /><br />
+    </form>
+    <h3>Завдання 4</h3>
+
+    <form></form>
+    <input type="button" value="task4" onclick="task4()" />
+
+    <h3>Завдання 5.</h3>
+    <form></form>
+    <input type="button" value="task5" onclick="task5()" />
+    <h3>Завдання 6.</h3>
+    <div class="input-section">
+      <label for="productName"
+        >Введіть назву товару або оберіть зі списку:</label
+      >
+      <input type="text" id="productName" placeholder="Назва товару..." />
+      <br /><br />
+      <label for="productSelect">Оберіть товар зі списку:</label>
+      <select id="productSelect">
+        <option value="">Оберіть товар</option>
+        <option value="0">Юхта</option>
+        <option value="1">Юпітер</option>
+        <option value="2">Мандаринка</option>
+        <option value="3">Міксер</option>
+      </select>
+      <br /><br />
+      <button onclick="fun1()">Наявна кількість і вартість</button>
+    </div>
+    <div class="output-section">
+      <div class="output-field">
+        <label>Наявна кількість: </label>
+        <span id="quantity"></span>
+      </div>
+      <div class="output-field">
+        <label>Вартість за одиницю: </label>
+        <span id="price"></span>
+      </div>
+    </div>
+    <button onclick="fun2()">Загальна сума</button>
+    <div class="output-section">
+      <div class="output-field">
+        <label>Загальна сума: </label>
+        <span id="totalAmount"></span>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

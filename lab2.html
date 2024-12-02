@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Годинник і календар</title>
+    <style></style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h3>Завдання 1.</h3>
+    <div id="clock">Завантаження...</div>
+
+    <script>
+      function updateClock() {
+        const now = new Date();
+
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const sec = now.getSeconds();
+
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        const day = now.getDate();
+
+        const time = `${hour}/${min}/${sec}`;
+        const date = `${year}*${month}*${day}`;
+
+        const formattedTime = `${time} + ${date}`;
+
+        document.getElementById('clock').textContent = formattedTime;
+      }
+
+      setInterval(updateClock, 1000);
+
+      updateClock();
+    </script>
+
+    <h3>Завдання 2.</h3>
+    <div class="calculator">
+      <input type="text" id="display" readonly />
+      <div class="buttons">
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('+')">+</button>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('-')">-</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('*')">*</button>
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="appendToDisplay('.')">.</button>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="appendToDisplay('/')">/</button>
+        <button onclick="calculateResult()" class="equal">=</button>
+      </div>
+    </div>
+
+    <script>
+      function appendToDisplay(value) {
+        const display = document.getElementById('display');
+        display.value += value;
+      }
+
+      function clearDisplay() {
+        const display = document.getElementById('display');
+        display.value = '';
+      }
+
+      function calculateResult() {
+        const display = document.getElementById('display');
+        try {
+          display.value = eval(display.value);
+        } catch (error) {
+          display.value = 'Помилка';
+        }
+      }
+    </script>
+    <h3>Завдання 3.</h3>
+    <h1>Побудова таблиці та розрахунок</h1>
+    <form id="main_form">
+      <div id="controls">
+        <label for="t_rows">Кількість рядків:</label>
+        <input type="number" id="t_rows" value="3" min="1" />
+        <label for="t_cols">Кількість стовпців:</label>
+        <input type="number" id="t_cols" value="3" min="1" />
+        <button type="button" onclick="buildTable()">Побудувати таблицю</button>
+        <button type="button" onclick="calculateSecondRowSum()">
+          Розрахувати суму другого рядка
+        </button>
+      </div>
+      <div id="table_container"></div>
+    </form>
+
+    <script>
+      let rows, cols;
+
+      function buildTable() {
+        rows = parseInt(document.getElementById('t_rows').value);
+        cols = parseInt(document.getElementById('t_cols').value);
+        let tableHTML = "<table border='1'>\n";
+
+        for (let i = 1; i <= rows; i++) {
+          tableHTML += '<tr>\n';
+          for (let j = 1; j <= cols; j++) {
+            let value = 5 * j + 3 * i;
+            tableHTML += `<td><input type="text" id="cell_${i}_${j}" value="${value}" readonly></td>\n`;
+          }
+          tableHTML += '</tr>\n';
+        }
+
+        tableHTML += '</table>';
+        document.getElementById('table_container').innerHTML = tableHTML;
+      }
+
+      function calculateSecondRowSum() {
+        if (!rows || !cols || rows < 2) {
+          alert('Будь ласка, створіть таблицю з як мінімум двома рядками!');
+          return;
+        }
+
+        let sum = 0;
+        for (let j = 1; j <= cols; j++) {
+          let cellValue = parseInt(
+            document.getElementById(`cell_2_${j}`).value
+          );
+          sum += cellValue;
+        }
+
+        alert(`Сума елементів другого рядка: ${sum}`);
+      }
+    </script>
+    <h3>Завдання 4.</h3>
+    <form>
+      <input type="button" value="task2" onclick="task2()" />
+    </form>
+    <h3>Завдання 5.</h3>
+    <button onclick="demonstrateConsoleMethods()">
+      Запустити демонстрацію
+    </button>
+    <script>
+      function demonstrateConsoleMethods() {
+        // console.info()
+        console.info(
+          'Це інформаційне повідомлення: метод console.info() використовується для загальних логів.'
+        );
+
+        // console.warn()
+        console.warn(
+          'Це попередження: метод console.warn() використовується для відображення попереджень.'
+        );
+
+        // console.error()
+        console.error(
+          'Це помилка: метод console.error() використовується для відображення помилок.'
+        );
+
+        // console.dir()
+        const obj = { name: 'JavaScript', type: 'Programming Language' };
+        console.dir(obj); // Виводить структуру об'єкта
+
+        // console.dirxml()
+        const element = document.createElement('div');
+        element.innerHTML = '<h1>Привіт, світ!</h1>';
+        console.dirxml(element); // Виводить XML-структуру елемента
+
+        // console.time() і console.timeEnd()
+        console.time('Таймер');
+        for (let i = 0; i < 100000; i++) {
+          // Довільний цикл для демонстрації
+          Math.sqrt(i);
+        }
+        console.timeEnd('Таймер'); // Виводить час виконання
+
+        // console.profile() і console.profileEnd()
+        console.profile('Профілювання');
+        for (let i = 0; i < 100000; i++) {
+          Math.pow(i, 2);
+        }
+        console.profileEnd('Профілювання');
+
+        // console.assert()
+        const condition = 5 > 10; // Невірна умова
+        console.assert(condition, 'Умова не виконана: 5 > 10 є хибним.');
+      }
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
