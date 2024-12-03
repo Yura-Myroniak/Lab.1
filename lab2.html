@@ -135,56 +135,75 @@
       }
     </script>
     <h3>Завдання 4.</h3>
-    <form>
-      <input type="button" value="task2" onclick="task2()" />
-    </form>
+    <button onclick="demonstrateConsoleLog()">Запустити демонстрацію</button>
+    <p>Відкрийте вкладку "Console" (DevTools) для перегляду результатів.</p>
+    <script>
+      function demonstrateConsoleLog() {
+        // 1. Вивід остачі від ділення одного числа на інше
+        let a = 10;
+        let b = 3;
+        console.log(`Остача від ділення ${a} на ${b} =`, a % b);
+
+        // 2. Вивід логічного значення перевірки рівності нулю остачі від ділення
+        let isDivisible = a % b === 0;
+        console.log(`${a} ділиться на ${b} без остачі?`, isDivisible);
+
+        // 3. Комбінований вивід тексту і значень масиву, використовуючи %2, %d, %s
+        let arr = [10, 20, 30, 40, 50];
+        console.log('Масив: %o', arr); // Вивід масиву як об'єкта
+        console.log('Починаємо з другого елемента: %d', arr[1]); // Вивід другого елемента
+        console.log('Текстовий опис масиву: %s', arr.join(', ')); // Вивід як текст
+
+        // Додатковий приклад комбінованого виводу
+        console.log("Число: %d, Рядок: %s, Об'єкт: %o", 42, 'Hello', {
+          name: 'JavaScript',
+        });
+
+        // Додавання розділової лінії для зручності
+        console.log('='.repeat(50));
+      }
+    </script>
+
     <h3>Завдання 5.</h3>
     <button onclick="demonstrateConsoleMethods()">
       Запустити демонстрацію
     </button>
+    <p>Відкрийте вкладку "Console" (DevTools) для перегляду результатів.</p>
+
     <script>
       function demonstrateConsoleMethods() {
-        // console.info()
         console.info(
           'Це інформаційне повідомлення: метод console.info() використовується для загальних логів.'
         );
 
-        // console.warn()
         console.warn(
           'Це попередження: метод console.warn() використовується для відображення попереджень.'
         );
 
-        // console.error()
         console.error(
           'Це помилка: метод console.error() використовується для відображення помилок.'
         );
 
-        // console.dir()
         const obj = { name: 'JavaScript', type: 'Programming Language' };
-        console.dir(obj); // Виводить структуру об'єкта
+        console.dir(obj);
 
-        // console.dirxml()
         const element = document.createElement('div');
         element.innerHTML = '<h1>Привіт, світ!</h1>';
-        console.dirxml(element); // Виводить XML-структуру елемента
+        console.dirxml(element);
 
-        // console.time() і console.timeEnd()
         console.time('Таймер');
         for (let i = 0; i < 100000; i++) {
-          // Довільний цикл для демонстрації
           Math.sqrt(i);
         }
-        console.timeEnd('Таймер'); // Виводить час виконання
+        console.timeEnd('Таймер');
 
-        // console.profile() і console.profileEnd()
         console.profile('Профілювання');
         for (let i = 0; i < 100000; i++) {
           Math.pow(i, 2);
         }
         console.profileEnd('Профілювання');
 
-        // console.assert()
-        const condition = 5 > 10; // Невірна умова
+        const condition = 5 > 10;
         console.assert(condition, 'Умова не виконана: 5 > 10 є хибним.');
       }
     </script>
