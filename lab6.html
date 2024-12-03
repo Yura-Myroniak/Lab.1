@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Перевірка форми</title>
+    <style>
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group input {
+        width: 300px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .form-group input.valid {
+        border-color: green;
+      }
+
+      .form-group input.invalid {
+        border-color: red;
+      }
+
+      .form-group .message {
+        margin-left: 10px;
+        font-size: 0.9em;
+        color: red;
+      }
+
+      .form-group .message.valid {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h1>Завдання 1.</h1>
+    <script>
+      let s = 'dwbyu@mail.ua';
+      let r = /^([a-z0-9]+)(\.[a-z0-9]+)*@([a-z0-9]+)(\.[a-z0-9]+)*$/i;
+      let a = s.match(r);
+      if (a) {
+        for (let i = 0; i < a.length; i++) {
+          document.writeln(`<hr> a[${i}]: ${a[i]}`);
+        }
+      } else {
+        document.writeln('<p>E-mail не відповідає шаблону</p>');
+      }
+    </script>
+    <h1>Завдання 2.1,2.2</h1>
+    <form id="validationForm">
+      <div class="form-group">
+        <label for="email">E-mail:</label><br />
+        <input type="text" id="email" placeholder="example@pnu.edu.ua" />
+        <span class="message" id="emailMessage"></span>
+      </div>
+      <div class="form-group">
+        <label for="name">Ім’я та Прізвище:</label><br />
+        <input type="text" id="name" placeholder="Ім’я Прізвище" />
+        <span class="message" id="nameMessage"></span>
+      </div>
+      <div class="form-group">
+        <label for="login">Логін:</label><br />
+        <input type="text" id="login" placeholder="Тільки латина" />
+        <span class="message" id="loginMessage"></span>
+      </div>
+      <div class="form-group">
+        <label for="password">Пароль:</label><br />
+        <input type="password" id="password" placeholder="Мінімум 8 символів" />
+        <span class="message" id="passwordMessage"></span>
+      </div>
+      <div class="form-group">
+        <label for="zipcode">Поштовий індекс:</label><br />
+        <input type="text" id="zipcode" placeholder="5 цифр" />
+        <span class="message" id="zipcodeMessage"></span>
+      </div>
+      <button type="button" onclick="validateForm()">Перевірити</button>
+    </form>
+    <script>
+      // Валідація форми
+      function validateForm() {
+        // Правила
+        const emailPattern = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
+        const namePattern = /^[A-ZА-Я][a-zа-я]+ [A-ZА-Я]+$/;
+        const loginPattern = /^[a-z]+$/i;
+        const passwordPattern = /^(?=.*[a-z])(?=.*\d)(?=.*[-_!@#$%^&*]).{8,}$/;
+        const zipcodePattern = /^\d{5}$/;
+
+        // Поля
+        const email = document.getElementById('email');
+        const name = document.getElementById('name');
+        const login = document.getElementById('login');
+        const password = document.getElementById('password');
+        const zipcode = document.getElementById('zipcode');
+
+        // Повідомлення
+        const emailMessage = document.getElementById('emailMessage');
+        const nameMessage = document.getElementById('nameMessage');
+        const loginMessage = document.getElementById('loginMessage');
+        const passwordMessage = document.getElementById('passwordMessage');
+        const zipcodeMessage = document.getElementById('zipcodeMessage');
+
+        // Валідація
+        validateField(
+          email,
+          emailPattern,
+          emailMessage,
+          'E-mail повинен закінчуватись на @pnu.edu.ua'
+        );
+        validateField(
+          name,
+          namePattern,
+          nameMessage,
+          'Ім’я та прізвище: правильний формат'
+        );
+        validateField(
+          login,
+          loginPattern,
+          loginMessage,
+          'Логін: тільки латина'
+        );
+        validateField(
+          password,
+          passwordPattern,
+          passwordMessage,
+          'Пароль: мінімум 8 символів, 1 цифра, 1 спецсимвол'
+        );
+        validateField(
+          zipcode,
+          zipcodePattern,
+          zipcodeMessage,
+          'Поштовий індекс: 5 цифр'
+        );
+      }
+
+      // Функція для валідації поля
+      function validateField(field, pattern, messageElement, errorMessage) {
+        if (pattern.test(field.value)) {
+          field.classList.remove('invalid');
+          field.classList.add('valid');
+          messageElement.classList.add('valid');
+          messageElement.classList.remove('invalid');
+          messageElement.textContent = '✔';
+        } else {
+          field.classList.remove('valid');
+          field.classList.add('invalid');
+          messageElement.classList.add('invalid');
+          messageElement.classList.remove('valid');
+          messageElement.textContent = errorMessage;
+        }
+      }
+    </script>
+  </body>
+</html>

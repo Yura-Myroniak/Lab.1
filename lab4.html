@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Сторінка тестування</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .question {
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h1>Тестування</h1>
+    <form id="testForm">
+      <div class="question">
+        <p>1. Яка столиця України?</p>
+        <input type="radio" name="question1" value="1" /> Київ<br />
+        <input type="radio" name="question1" value="0" /> Львів<br />
+        <input type="radio" name="question1" value="0" /> Одеса<br />
+        <input type="radio" name="question1" value="0" /> Харків
+      </div>
+
+      <div class="question">
+        <p>2. Яка найбільша планета в Сонячній системі?</p>
+        <input type="radio" name="question2" value="0" /> Земля<br />
+        <input type="radio" name="question2" value="1" /> Юпітер<br />
+        <input type="radio" name="question2" value="0" /> Марс<br />
+        <input type="radio" name="question2" value="0" /> Венера
+      </div>
+
+      <div class="question">
+        <p>3. Які кольори входять до прапора України? (оберіть два варіанти)</p>
+        <input type="checkbox" name="question3" value="1" /> Синій<br />
+        <input type="checkbox" name="question3" value="1" /> Жовтий<br />
+        <input type="checkbox" name="question3" value="0" /> Червоний<br />
+        <input type="checkbox" name="question3" value="0" /> Зелений
+      </div>
+
+      <div class="question">
+        <p>4. Які планети є газовими гігантами? (оберіть два варіанти)</p>
+        <input type="checkbox" name="question4" value="1" /> Юпітер<br />
+        <input type="checkbox" name="question4" value="1" /> Сатурн<br />
+        <input type="checkbox" name="question4" value="0" /> Меркурій<br />
+        <input type="checkbox" name="question4" value="0" /> Земля
+      </div>
+
+      <div class="question">
+        <p>5. Оберіть столицю Європейської країни:</p>
+        <select name="question5">
+          <option value="0">Вашингтон</option>
+          <option value="1">Берлін</option>
+          <option value="0">Сідней</option>
+          <option value="0">Токіо</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <p>6. Оберіть кілька країн Європи:</p>
+        <select name="question6" multiple>
+          <option value="1">Німеччина</option>
+          <option value="1">Франція</option>
+          <option value="0">Канада</option>
+          <option value="0">Австралія</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <p>7. Напишіть назву найбільшого океану:</p>
+        <input type="text" name="question7" />
+      </div>
+
+      <button type="button" onclick="evaluateTest()">
+        Завершити тестування
+      </button>
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+      function evaluateTest() {
+        const form = document.getElementById('testForm');
+        let resultsHTML =
+          '<table><tr><th>Питання</th><th>Ваша відповідь</th><th>Бали</th></tr>';
+        let totalScore = 0;
+
+        for (let i = 1; i <= 2; i++) {
+          const answer = form[`question${i}`].value;
+          const score = parseInt(answer);
+          totalScore += score;
+          resultsHTML += `<tr><td>${i}</td><td>${
+            answer ? 'Правильно' : 'Неправильно'
+          }</td><td>${score}</td></tr>`;
+        }
+
+        for (let i = 3; i <= 4; i++) {
+          const checkboxes = form[`question${i}`];
+          const selected = Array.from(checkboxes).filter(c => c.checked);
+          if (selected.length === 2) {
+            const score = selected.reduce(
+              (sum, c) => sum + parseInt(c.value),
+              0
+            );
+            totalScore += score;
+            resultsHTML += `<tr><td>${i}</td><td>${
+              selected.length === 2 && score === 2 ? 'Правильно' : 'Неправильно'
+            }</td><td>${score}</td></tr>`;
+          } else {
+            resultsHTML += `<tr><td>${i}</td><td>Помилка</td><td>0</td></tr>`;
+          }
+        }
+
+        const question5 = form.question5.value;
+        const score5 = parseInt(question5);
+        totalScore += score5;
+        resultsHTML += `<tr><td>5</td><td>${
+          score5 ? 'Правильно' : 'Неправильно'
+        }</td><td>${score5}</td></tr>`;
+
+        const question6 = Array.from(form.question6.options).filter(
+          option => option.selected
+        );
+        const selected6 = question6.map(option => parseInt(option.value));
+        const score6 = selected6.reduce((sum, value) => sum + value, 0);
+        totalScore += score6;
+        resultsHTML += `<tr><td>6</td><td>${
+          score6 === 2 ? 'Правильно' : 'Неправильно'
+        }</td><td>${score6}</td></tr>`;
+
+        const question7 = form.question7.value.trim().toLowerCase();
+        const score7 =
+          question7 === 'тихий' || question7 === 'тихий океан' ? 1 : 0;
+        totalScore += score7;
+        resultsHTML += `<tr><td>7</td><td>${question7}</td><td>${score7}</td></tr>`;
+
+        resultsHTML += `<tr><td colspan="2"><strong>Загальний бал</strong></td><td><strong>${totalScore}</strong></td></tr>`;
+        resultsHTML += '</table>';
+        document.getElementById('results').innerHTML = resultsHTML;
+      }
+    </script>
+  </body>
+</html>

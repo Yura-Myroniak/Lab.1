@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Завдання</title>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h1>Завдання 1.</h1>
+    <form id="trapAreaForm">
+      <label for="base1">Довжина першої основи (a):</label><br />
+      <input
+        type="number"
+        id="base1"
+        placeholder="Введіть a"
+        onchange="calculateArea()"
+      /><br />
+
+      <label for="base2">Довжина другої основи (b):</label><br />
+      <input
+        type="number"
+        id="base2"
+        placeholder="Введіть b"
+        onchange="calculateArea()"
+      /><br />
+
+      <label for="height">Висота трапеції (h):</label><br />
+      <input
+        type="number"
+        id="height"
+        placeholder="Введіть h"
+        onchange="calculateArea()"
+      /><br />
+
+      <div id="result"></div>
+    </form>
+    <script>
+      function calculateArea() {
+        let a = parseFloat(document.getElementById('base1').value);
+        let b = parseFloat(document.getElementById('base2').value);
+        let h = parseFloat(document.getElementById('height').value);
+
+        if (isNaN(a) || isNaN(b) || isNaN(h) || a <= 0 || b <= 0 || h <= 0) {
+          document.getElementById('result').textContent =
+            'Будь ласка, введіть коректні позитивні числа для всіх полів!';
+          return;
+        }
+
+        let area = ((a + b) * h) / 2;
+
+        document.getElementById(
+          'result'
+        ).textContent = `Площа трапеції: ${area.toFixed(
+          2
+        )} квадратних одиниць.`;
+      }
+    </script>
+    <h1>Завдання 2.</h1>
+    <textarea
+      id="textField"
+      placeholder="Тут буде текст..."
+      readonly
+    ></textarea>
+    <div id="keyboard"></div>
+    <script>
+      const letters = [
+        'а',
+        'б',
+        'в',
+        'г',
+        'д',
+        'е',
+        'є',
+        'ж',
+        'з',
+        'и',
+        'і',
+        'ї',
+        'й',
+        'к',
+        'л',
+        'м',
+        'н',
+        'о',
+        'п',
+        'р',
+        'с',
+        'т',
+        'у',
+        'ф',
+        'х',
+        'ц',
+        'ч',
+        'ш',
+        'щ',
+        'ь',
+        'ю',
+        'я',
+      ];
+
+      function addToTextField(char) {
+        const textField = document.getElementById('textField');
+        textField.value += char;
+      }
+
+      function clearTextField() {
+        const textField = document.getElementById('textField');
+        textField.value = '';
+      }
+
+      function generateKeyboard() {
+        const keyboardContainer = document.getElementById('keyboard');
+
+        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        let digitsRow = document.createElement('div');
+        digitsRow.classList.add('keyboard-row');
+        digits.forEach(digit => {
+          let button = createButton(digit);
+          digitsRow.appendChild(button);
+        });
+        keyboardContainer.appendChild(digitsRow);
+
+        let rows = [
+          letters.slice(0, 10),
+          letters.slice(10, 20),
+          letters.slice(20),
+        ];
+        rows.forEach(rowLetters => {
+          let row = document.createElement('div');
+          row.classList.add('keyboard-row');
+          rowLetters.forEach(letter => {
+            let button = createButton(letter);
+            row.appendChild(button);
+          });
+          keyboardContainer.appendChild(row);
+        });
+
+        let clearButton = document.createElement('button');
+        clearButton.textContent = 'Очистити поле';
+        clearButton.classList.add('clear-button');
+        clearButton.onclick = clearTextField;
+        keyboardContainer.appendChild(clearButton);
+      }
+
+      function createButton(char) {
+        let button = document.createElement('button');
+        button.textContent = char;
+        button.classList.add('keyboard-button');
+        button.onclick = () => addToTextField(char);
+        return button;
+      }
+
+      window.onload = generateKeyboard;
+    </script>
+
+    <h1>Завдання 3.</h1>
+    <textarea
+      id="textField"
+      placeholder="Тут буде текст..."
+      readonly
+    ></textarea>
+    <div id="keyboard"></div>
+    <script>
+      const ukrainianLetters = [
+        'а',
+        'б',
+        'в',
+        'г',
+        'д',
+        'е',
+        'є',
+        'ж',
+        'з',
+        'и',
+        'і',
+        'ї',
+        'й',
+        'к',
+        'л',
+        'м',
+        'н',
+        'о',
+        'п',
+        'р',
+        'с',
+        'т',
+        'у',
+        'ф',
+        'х',
+        'ц',
+        'ч',
+        'ш',
+        'щ',
+        'ь',
+        'ю',
+        'я',
+      ];
+      const englishLetters = [
+        'q',
+        'w',
+        'e',
+        'r',
+        't',
+        'y',
+        'u',
+        'i',
+        'o',
+        'p',
+        'a',
+        's',
+        'd',
+        'f',
+        'g',
+        'h',
+        'j',
+        'k',
+        'l',
+        'z',
+        'x',
+        'c',
+        'v',
+        'b',
+        'n',
+        'm',
+      ];
+
+      let currentLayout = ukrainianLetters;
+
+      function addToTextField(char) {
+        const textField = document.getElementById('textField');
+        textField.value += char;
+      }
+
+      function clearTextField() {
+        const textField = document.getElementById('textField');
+        textField.value = '';
+      }
+
+      function toggleLayout() {
+        currentLayout =
+          currentLayout === ukrainianLetters
+            ? englishLetters
+            : ukrainianLetters;
+        generateKeyboard();
+      }
+
+      function generateKeyboard() {
+        const keyboardContainer = document.getElementById('keyboard');
+        keyboardContainer.innerHTML = '';
+
+        const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        let digitsRow = document.createElement('div');
+        digitsRow.classList.add('keyboard-row');
+        digits.forEach(digit => {
+          let button = createButton(digit);
+          digitsRow.appendChild(button);
+        });
+        keyboardContainer.appendChild(digitsRow);
+
+        let rows = [
+          currentLayout.slice(0, 10),
+          currentLayout.slice(10, 20),
+          currentLayout.slice(20),
+        ];
+        rows.forEach(rowLetters => {
+          let row = document.createElement('div');
+          row.classList.add('keyboard-row');
+          rowLetters.forEach(letter => {
+            let button = createButton(letter);
+            row.appendChild(button);
+          });
+          keyboardContainer.appendChild(row);
+        });
+
+        let clearButton = document.createElement('button');
+        clearButton.textContent = 'Очистити поле';
+        clearButton.classList.add('clear-button');
+        clearButton.onclick = clearTextField;
+        keyboardContainer.appendChild(clearButton);
+
+        let toggleButton = document.createElement('button');
+        toggleButton.textContent = 'Alt+Shift';
+        toggleButton.classList.add('toggle-button');
+        toggleButton.onclick = toggleLayout;
+        keyboardContainer.appendChild(toggleButton);
+      }
+
+      function createButton(char) {
+        let button = document.createElement('button');
+        button.textContent = char;
+        button.classList.add('keyboard-button');
+        button.onclick = () => addToTextField(char);
+        return button;
+      }
+
+      window.onload = generateKeyboard;
+    </script>
+
+    <h1>Завдання 4.</h1>
+    <img id="imageViewer" src="" alt="Зображення" />
+    <div id="imageName"></div>
+    <div class="button-container">
+      <button onclick="prevImage()">Назад</button>
+      <button onclick="nextImage()">Вперед</button>
+    </div>
+    <script>
+      const images = [
+        './images.jpg/images1.jpg',
+        './images.jpg/images2.jpg',
+        './images.jpg/images3.jpg',
+        './images.jpg/images4.jpg',
+      ];
+
+      let currentIndex = 0;
+
+      function updateImage() {
+        const imgElement = document.getElementById('imageViewer');
+        imgElement.src = images[currentIndex];
+        document.getElementById(
+          'imageName'
+        ).textContent = `Зображення: ${images[currentIndex]}`;
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+      }
+
+      window.onload = () => {
+        updateImage();
+      };
+    </script>
+
+    <h1>Завдання 4.</h1>
+    <img id="imageViewer" src="" alt="Зображення" />
+    <div id="imageName"></div>
+    <div class="button-container">
+      <button onclick="prevImage()">Назад</button>
+      <button onclick="nextImage()">Вперед</button>
+    </div>
+    <script>
+      const images = [
+        './images.jpg/images1.jpg',
+        './images.jpg/images2.jpg',
+        './images.jpg/images3.jpg',
+        './images.jpg/images4.jpg',
+      ];
+
+      let currentIndex = 0;
+
+      function updateImage() {
+        const imgElement = document.getElementById('imageViewer');
+        imgElement.src = images[currentIndex];
+        document.getElementById(
+          'imageName'
+        ).textContent = `Зображення: ${images[currentIndex]}`;
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+      }
+
+      window.onload = () => {
+        updateImage();
+      };
+    </script>
+    <h1>Завдання 5.</h1>
+    <div id="task"></div>
+    <input type="text" id="answer" placeholder="Ваша відповідь" />
+    <div>
+      <button id="checkButton" onclick="checkAnswer()">Перевірити</button>
+      <button id="nextButton" onclick="nextQuestion()">
+        Наступне завдання
+      </button>
+    </div>
+    <div id="result"></div>
+    <div id="score">Рахунок: 0 / 0</div>
+
+    <script>
+      let correctAnswers = 0; // Кількість правильних відповідей
+      let totalQuestions = 0; // Загальна кількість питань
+      let currentAnswer = 0; // Правильна відповідь для поточного завдання
+
+      // Генерація випадкового завдання
+      function generateQuestion() {
+        if (totalQuestions >= 5) {
+          document.getElementById('task').textContent =
+            'Ви завершили всі завдання!';
+          document.getElementById('checkButton').disabled = true;
+          document.getElementById('nextButton').disabled = true;
+          return;
+        }
+
+        const num1 = Math.floor(Math.random() * 10); // Перше випадкове число
+        const num2 = Math.floor(Math.random() * 10); // Друге випадкове число
+        const operators = ['+', '-', '*', '/'];
+        const randomOperator =
+          operators[Math.floor(Math.random() * operators.length)]; // Випадковий оператор
+
+        // Обчислення правильної відповіді
+        switch (randomOperator) {
+          case '+':
+            currentAnswer = num1 + num2;
+            break;
+          case '-':
+            currentAnswer = num1 - num2;
+            break;
+          case '*':
+            currentAnswer = num1 * num2;
+            break;
+          case '/':
+            currentAnswer = num2 !== 0 ? (num1 / num2).toFixed(2) : '∞'; // Уникнення ділення на 0
+            break;
+        }
+
+        // Відображення завдання
+        document.getElementById(
+          'task'
+        ).textContent = `Обчисліть: ${num1} ${randomOperator} ${num2}`;
+        document.getElementById('answer').value = ''; // Очищення текстового поля
+      }
+
+      // Перевірка відповіді
+      function checkAnswer() {
+        const userAnswer = document.getElementById('answer').value.trim();
+        const resultText = document.getElementById('result');
+
+        if (userAnswer === currentAnswer.toString()) {
+          resultText.textContent = 'Правильно!';
+          correctAnswers++;
+        } else {
+          resultText.textContent = `Помилка, правильна відповідь: ${currentAnswer}`;
+        }
+
+        totalQuestions++;
+        updateScore();
+      }
+
+      // Оновлення рахунку
+      function updateScore() {
+        document.getElementById(
+          'score'
+        ).textContent = `Рахунок: ${correctAnswers} / ${totalQuestions}`;
+      }
+
+      // Перехід до наступного питання
+      function nextQuestion() {
+        generateQuestion();
+        document.getElementById('result').textContent = ''; // Очищення повідомлення результату
+      }
+
+      // Ініціалізація першого завдання
+      window.onload = generateQuestion;
+    </script>
+
+    <h1>Завдання 6.</h1>
+    <div class="tree">
+      <ul>
+        <li>
+          <a>fruits</a>
+          <ul>
+            <li>apple</li>
+            <li>pineapple;</li>
+            <li>appricot;</li>
+            <li>pear;</li>
+            <li>lemon;</li>
+          </ul>
+        </li>
+        <li>
+          <a>vegetables</a>
+          <ul>
+            <li>potatoes;</li>
+            <li>beetroot;</li>
+            <li>carrots;</li>
+            <li>pear;</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <script>
+      function toggleList(event) {
+        const subList = event.target.nextElementSibling; // Наступний елемент після <a>
+        if (subList) {
+          subList.classList.toggle('hidden'); // Додати/зняти клас "hidden"
+        }
+      }
+
+      function initializeTree() {
+        const toggleLinks = document.querySelectorAll('.tree a'); // Вибрати всі <a>
+        toggleLinks.forEach(link => {
+          link.addEventListener('click', toggleList); // Додати обробник події
+        });
+      }
+
+      window.onload = initializeTree;
+    </script>
+  </body>
+</html>
