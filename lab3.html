@@ -296,213 +296,176 @@
 
       window.onload = generateKeyboard;
     </script>
-
     <h1>Завдання 4.</h1>
-    <img id="imageViewer" src="" alt="Зображення" />
-    <div id="imageName"></div>
-    <div class="button-container">
-      <button onclick="prevImage()">Назад</button>
-      <button onclick="nextImage()">Вперед</button>
-    </div>
-    <script>
-      const images = [
-        './images.jpg/images1.jpg',
-        './images.jpg/images2.jpg',
-        './images.jpg/images3.jpg',
-        './images.jpg/images4.jpg',
-      ];
-
-      let currentIndex = 0;
-
-      function updateImage() {
-        const imgElement = document.getElementById('imageViewer');
-        imgElement.src = images[currentIndex];
-        document.getElementById(
-          'imageName'
-        ).textContent = `Зображення: ${images[currentIndex]}`;
-      }
-
-      function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-      }
-
-      function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-      }
-
-      window.onload = () => {
-        updateImage();
-      };
-    </script>
-
-    <h1>Завдання 4.</h1>
-    <img id="imageViewer" src="" alt="Зображення" />
-    <div id="imageName"></div>
-    <div class="button-container">
-      <button onclick="prevImage()">Назад</button>
-      <button onclick="nextImage()">Вперед</button>
-    </div>
-    <script>
-      const images = [
-        './images.jpg/images1.jpg',
-        './images.jpg/images2.jpg',
-        './images.jpg/images3.jpg',
-        './images.jpg/images4.jpg',
-      ];
-
-      let currentIndex = 0;
-
-      function updateImage() {
-        const imgElement = document.getElementById('imageViewer');
-        imgElement.src = images[currentIndex];
-        document.getElementById(
-          'imageName'
-        ).textContent = `Зображення: ${images[currentIndex]}`;
-      }
-
-      function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-      }
-
-      function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-      }
-
-      window.onload = () => {
-        updateImage();
-      };
-    </script>
-    <h1>Завдання 5.</h1>
-    <div id="task"></div>
-    <input type="text" id="answer" placeholder="Ваша відповідь" />
     <div>
-      <button id="checkButton" onclick="checkAnswer()">Перевірити</button>
-      <button id="nextButton" onclick="nextQuestion()">
-        Наступне завдання
-      </button>
+      <img id="imageViewer" src="" alt="Перегляд зображення" />
     </div>
-    <div id="result"></div>
-    <div id="score">Рахунок: 0 / 0</div>
+    <div>
+      <button onclick="previousImage()">Назад</button>
+      <button onclick="nextImage()">Вперед</button>
+    </div>
 
     <script>
-      let correctAnswers = 0; // Кількість правильних відповідей
-      let totalQuestions = 0; // Загальна кількість питань
-      let currentAnswer = 0; // Правильна відповідь для поточного завдання
+      // Масив зображень у форматі JSON
+      let images = [
+        './images.jpg/images1.jpg',
+        './images.jpg/images2.jpg',
+        './images.jpg/images3.jpg',
+        './images.jpg/images4.jpg',
+      ];
+
+      // Поточний індекс
+      let currentIndex = 0;
+
+      // Встановлення початкового зображення
+      const imageViewer = document.getElementById('imageViewer');
+      imageViewer.src = images[currentIndex];
+
+      // Функція для переходу на попереднє зображення
+      function previousImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        imageViewer.src = images[currentIndex];
+      }
+
+      // Функція для переходу на наступне зображення
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        imageViewer.src = images[currentIndex];
+      }
+    </script>
+
+    <h1>Завдання 5.</h1>
+    <p id="question">Завдання з'явиться тут</p>
+    <input type="number" id="answer" placeholder="Ваша відповідь" />
+    <br />
+    <button onclick="checkAnswer()">Перевірити</button>
+    <button onclick="nextQuestion()">Наступне завдання</button>
+    <p class="result" id="result"></p>
+    <p class="score" id="score">Рахунок: 0/0</p>
+
+    <script>
+      // Змінні для роботи
+      let num1, num2, operator, correctAnswer;
+      let currentQuestion = 0;
+      let correctAnswers = 0;
 
       // Генерація випадкового завдання
       function generateQuestion() {
-        if (totalQuestions >= 5) {
-          document.getElementById('task').textContent =
-            'Ви завершили всі завдання!';
-          document.getElementById('checkButton').disabled = true;
-          document.getElementById('nextButton').disabled = true;
-          return;
-        }
-
-        const num1 = Math.floor(Math.random() * 10); // Перше випадкове число
-        const num2 = Math.floor(Math.random() * 10); // Друге випадкове число
+        num1 = Math.floor(Math.random() * 10);
+        num2 = Math.floor(Math.random() * 10);
         const operators = ['+', '-', '*', '/'];
-        const randomOperator =
-          operators[Math.floor(Math.random() * operators.length)]; // Випадковий оператор
+        operator = operators[Math.floor(Math.random() * operators.length)];
+
+        // Уникнення ділення на нуль
+        if (operator === '/' && num2 === 0) {
+          num2 = 1;
+        }
 
         // Обчислення правильної відповіді
-        switch (randomOperator) {
+        switch (operator) {
           case '+':
-            currentAnswer = num1 + num2;
+            correctAnswer = num1 + num2;
             break;
           case '-':
-            currentAnswer = num1 - num2;
+            correctAnswer = num1 - num2;
             break;
           case '*':
-            currentAnswer = num1 * num2;
+            correctAnswer = num1 * num2;
             break;
           case '/':
-            currentAnswer = num2 !== 0 ? (num1 / num2).toFixed(2) : '∞'; // Уникнення ділення на 0
+            correctAnswer = parseFloat((num1 / num2).toFixed(2));
             break;
         }
 
-        // Відображення завдання
+        // Показ завдання
         document.getElementById(
-          'task'
-        ).textContent = `Обчисліть: ${num1} ${randomOperator} ${num2}`;
-        document.getElementById('answer').value = ''; // Очищення текстового поля
+          'question'
+        ).textContent = `Обчисліть: ${num1} ${operator} ${num2}`;
+        document.getElementById('answer').value = '';
+        document.getElementById('result').textContent = '';
       }
 
       // Перевірка відповіді
       function checkAnswer() {
-        const userAnswer = document.getElementById('answer').value.trim();
-        const resultText = document.getElementById('result');
+        const userAnswer = parseFloat(document.getElementById('answer').value);
 
-        if (userAnswer === currentAnswer.toString()) {
-          resultText.textContent = 'Правильно!';
-          correctAnswers++;
-        } else {
-          resultText.textContent = `Помилка, правильна відповідь: ${currentAnswer}`;
+        if (isNaN(userAnswer)) {
+          document.getElementById('result').textContent =
+            'Будь ласка, введіть число!';
+          return;
         }
 
-        totalQuestions++;
+        if (userAnswer === correctAnswer) {
+          correctAnswers++;
+          document.getElementById('result').textContent = 'Правильно!';
+        } else {
+          document.getElementById(
+            'result'
+          ).textContent = `Помилка, правильна відповідь: ${correctAnswer}`;
+        }
+
+        currentQuestion++;
         updateScore();
+      }
+
+      // Наступне завдання
+      function nextQuestion() {
+        if (currentQuestion >= 5) {
+          document.getElementById('question').textContent = 'Тест завершено!';
+          document.getElementById(
+            'result'
+          ).textContent = `Ви дали ${correctAnswers} правильних відповідей із 5.`;
+          document.getElementById('answer').disabled = true;
+          return;
+        }
+
+        generateQuestion();
       }
 
       // Оновлення рахунку
       function updateScore() {
         document.getElementById(
           'score'
-        ).textContent = `Рахунок: ${correctAnswers} / ${totalQuestions}`;
-      }
-
-      // Перехід до наступного питання
-      function nextQuestion() {
-        generateQuestion();
-        document.getElementById('result').textContent = ''; // Очищення повідомлення результату
+        ).textContent = `Рахунок: ${correctAnswers}/${currentQuestion}`;
       }
 
       // Ініціалізація першого завдання
-      window.onload = generateQuestion;
+      generateQuestion();
     </script>
 
     <h1>Завдання 6.</h1>
-    <div class="tree">
-      <ul>
-        <li>
-          <a>fruits</a>
-          <ul>
-            <li>apple</li>
-            <li>pineapple;</li>
-            <li>appricot;</li>
-            <li>pear;</li>
-            <li>lemon;</li>
-          </ul>
-        </li>
-        <li>
-          <a>vegetables</a>
-          <ul>
-            <li>potatoes;</li>
-            <li>beetroot;</li>
-            <li>carrots;</li>
-            <li>pear;</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <ul>
+      <li>
+        <a onclick="toggleVisibility('fruitsList')">fruits</a>
+        <ul id="fruitsList">
+          <li>apple</li>
+          <li>pineapple</li>
+          <li>appricot</li>
+          <li>pear</li>
+          <li>lemon</li>
+        </ul>
+      </li>
+      <li>
+        <a onclick="toggleVisibility('vegetablesList')">vegetables</a>
+        <ul id="vegetablesList">
+          <li>potatoes</li>
+          <li>beetroot</li>
+          <li>carrots</li>
+          <li>pear</li>
+        </ul>
+      </li>
+    </ul>
+
     <script>
-      function toggleList(event) {
-        const subList = event.target.nextElementSibling; // Наступний елемент після <a>
-        if (subList) {
-          subList.classList.toggle('hidden'); // Додати/зняти клас "hidden"
+      // Функція для згортання/розгортання підрозділів
+      function toggleVisibility(id) {
+        const list = document.getElementById(id);
+        if (list.style.display === 'none') {
+          list.style.display = 'block';
+        } else {
+          list.style.display = 'none';
         }
       }
-
-      function initializeTree() {
-        const toggleLinks = document.querySelectorAll('.tree a'); // Вибрати всі <a>
-        toggleLinks.forEach(link => {
-          link.addEventListener('click', toggleList); // Додати обробник події
-        });
-      }
-
-      window.onload = initializeTree;
     </script>
   </body>
 </html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Завдання 1: .fx.off</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Завдання 1.</h1>
+    <div class="box"></div>
+    <button id="animateBtn">Запустити анімацію</button>
+    <button id="disableFx">Вимкнути анімації</button>
+    <button id="enableFx">Увімкнути анімації</button>
+
+    <script>
+      $(document).ready(function () {
+        // Початковий стан: анімації увімкнені
+        $.fx.off = false;
+
+        // Кнопка запуску анімацій
+        $('#animateBtn').click(function () {
+          $('.box')
+            .animate({ width: '200px' }, 1000) // Зміна ширини
+            .fadeOut(1000) // Зникнення
+            .fadeIn(1000) // Повернення видимості
+            .slideUp(1000) // Згортання
+            .slideDown(1000); // Розгортання
+        });
+
+        // Вимкнути анімації
+        $('#disableFx').click(function () {
+          $.fx.off = true;
+          alert('Анімації вимкнено');
+        });
+
+        // Увімкнути анімації
+        $('#enableFx').click(function () {
+          $.fx.off = false;
+          alert('Анімації увімкнено');
+        });
+      });
+    </script>
+
+    <h1>Завдання 2.</h1>
+    <div class="logo">121 Інженерія ПЗ</div>
+    <div class="circle"></div>
+    <button id="startAnimation">Запустити анімацію</button>
+    <button id="stopAnimation">Зупинити анімацію</button>
+
+    <script>
+      $(document).ready(function () {
+        let animationRunning = false;
+
+        // Запуск анімації
+        $('#startAnimation').click(function () {
+          if (animationRunning) return; // Не запускати повторно
+
+          animationRunning = true;
+
+          // Анімація логотипу
+          $('.logo').animate(
+            { fontSize: '32px', width: '400px', backgroundColor: '#282828' },
+            {
+              duration: 2000,
+              easing: 'swing',
+              complete: function () {
+                console.log('Анімація логотипу завершена');
+              },
+            }
+          );
+
+          // Анімація кола
+          function animateCircle() {
+            $('.circle').animate(
+              { top: '500px', left: '700px', width: '100px', height: '100px' },
+              {
+                duration: 3000,
+                easing: 'linear',
+                complete: function () {
+                  // Повернення кола на місце
+                  $(this).animate(
+                    { top: '0', left: '0', width: '50px', height: '50px' },
+                    3000,
+                    function () {
+                      if (animationRunning) animateCircle();
+                    }
+                  );
+                },
+              }
+            );
+          }
+
+          animateCircle();
+        });
+
+        // Зупинка анімації
+        $('#stopAnimation').click(function () {
+          animationRunning = false;
+          $('.logo, .circle').stop(true, false); // Зупинка анімацій
+        });
+      });
+    </script>
+  </body>
+</html>
