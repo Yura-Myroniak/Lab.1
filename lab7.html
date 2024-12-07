@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Реалізація функцій</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      input,
+      button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 1em;
+      }
+
+      .output {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h1>Завдання 1.</h1>
+
+    <!-- 1.1 Виведення послідовності чисел у зворотному порядку -->
+    <div class="section">
+      <h2>1.1 Зворотній порядок чисел</h2>
+      <input
+        type="text"
+        id="sequence"
+        placeholder="Введіть числа через кому (1,2,3)"
+      />
+      <button onclick="handleReverseSequence()">Перевернути</button>
+      <div class="output" id="outputSequence"></div>
+    </div>
+
+    <!-- 1.2 Видалення нулів -->
+    <div class="section">
+      <h2>1.2 Видалення нулів</h2>
+      <input
+        type="text"
+        id="arrayWithZeros"
+        placeholder="Введіть числа через кому (0,1,2,0)"
+      />
+      <button onclick="handleNoZeros()">Видалити нулі</button>
+      <div class="output" id="outputNoZeros"></div>
+    </div>
+
+    <!-- 1.3 Відображення тексту у зворотному порядку -->
+    <div class="section">
+      <h2>1.3 Зворотній текст</h2>
+      <input type="text" id="reverserText" placeholder="Введіть текст" />
+      <button onclick="handleReverser()">Перевернути текст</button>
+      <div class="output" id="outputReverser"></div>
+    </div>
+
+    <!-- 1.4 Модифікація рядка -->
+    <div class="section">
+      <h2>1.4 Модифікація рядка</h2>
+      <input type="text" id="replaceText" value="Я не люблю морозиво" />
+      <button onclick="handleReplace()">Замінити</button>
+      <div class="output" id="outputReplace"></div>
+    </div>
+
+    <script>
+      // 1.1 Функція для виведення послідовності чисел у зворотному порядку
+      function handleReverseSequence() {
+        const input = document.getElementById('sequence').value;
+        const numbers = input.split(',').map(num => parseInt(num.trim()));
+        const reversed = numbers.reverse();
+        document.getElementById(
+          'outputSequence'
+        ).textContent = `Результат: ${reversed.join(', ')}`;
+      }
+
+      // 1.2 Функція для видалення нулів
+      function handleNoZeros() {
+        const input = document.getElementById('arrayWithZeros').value;
+        const numbers = input.split(',').map(num => parseInt(num.trim()));
+        const noZeros = numbers.filter(num => num !== 0);
+        document.getElementById(
+          'outputNoZeros'
+        ).textContent = `Результат: ${noZeros.join(', ')}`;
+      }
+
+      // 1.3 Функція для відображення тексту у зворотному порядку
+      function handleReverser() {
+        const input = document.getElementById('reverserText').value;
+        const reversedText = input.split('').reverse().join('');
+        document.getElementById(
+          'outputReverser'
+        ).textContent = `Результат: ${reversedText}`;
+      }
+
+      // 1.4 Функція для модифікації рядка
+      function handleReplace() {
+        const input = document.getElementById('replaceText').value;
+        const words = input.split(' ');
+        if (words.length >= 3) {
+          [words[1], words[2]] = [words[2], words[1]];
+        }
+        const replacedText = words.join(',');
+        document.getElementById(
+          'outputReplace'
+        ).textContent = `Результат: ${replacedText}`;
+      }
+    </script>
+
+    <h1>Завдання 2.</h1>
+
+    <!-- 2.1 Порівняння довжини рядків -->
+    <div class="section">
+      <h2>2.1 Порівняння довжини рядків</h2>
+      <input type="text" id="string1" placeholder="Рядок 1" />
+      <input type="text" id="string2" placeholder="Рядок 2" />
+      <button onclick="compareStrings()">Порівняти</button>
+      <div class="output" id="outputCompareStrings"></div>
+    </div>
+
+    <!-- 2.2 Індекси символів у рядку -->
+    <div class="section">
+      <h2>2.2 Індекси символів у рядку</h2>
+      <input type="text" id="inputString" placeholder="Введіть текст" />
+      <input type="text" id="inputChar" maxlength="1" placeholder="Символ" />
+      <button onclick="findIndexes()">Знайти індекси</button>
+      <div class="output" id="outputFindIndexes"></div>
+    </div>
+
+    <!-- 2.3 Перший символ у верхньому регістрі -->
+    <div class="section">
+      <h2>2.3 Перший символ у верхньому регістрі</h2>
+      <input type="text" id="capitalizeInput" placeholder="Введіть текст" />
+      <button onclick="capitalizeFirst()">Перетворити</button>
+      <div class="output" id="outputCapitalizeFirst"></div>
+    </div>
+
+    <!-- 2.4 Підрахунок голосних -->
+    <div class="section">
+      <h2>2.4 Підрахунок голосних</h2>
+      <input type="text" id="vowelsInput" placeholder="Введіть текст" />
+      <button onclick="countVowels()">Порахувати голосні</button>
+      <div class="output" id="outputCountVowels"></div>
+    </div>
+
+    <!-- 2.5 Перевірка спаму -->
+    <div class="section">
+      <h2>2.5 Перевірка спаму</h2>
+      <input type="text" id="spamInput" placeholder="Введіть текст" />
+      <button onclick="checkSpam()">Перевірити на спам</button>
+      <div class="output" id="outputCheckSpam"></div>
+    </div>
+
+    <!-- 2.6 Скорочення рядка -->
+    <div class="section">
+      <h2>2.6 Скорочення рядка</h2>
+      <input type="text" id="truncateInput" placeholder="Введіть текст" />
+      <input type="number" id="maxLength" placeholder="Максимальна довжина" />
+      <button onclick="truncateString()">Скоротити</button>
+      <div class="output" id="outputTruncate"></div>
+    </div>
+
+    <script>
+      // 2.1 Порівняння довжини рядків
+      function compareStrings() {
+        const str1 = document.getElementById('string1').value;
+        const str2 = document.getElementById('string2').value;
+        let result = 0;
+        if (str1.length > str2.length) result = 1;
+        else if (str1.length < str2.length) result = -1;
+        document.getElementById(
+          'outputCompareStrings'
+        ).textContent = `Результат: ${result}`;
+      }
+
+      // 2.2 Індекси символів у рядку
+      function findIndexes() {
+        const input = document.getElementById('inputString').value;
+        const char = document.getElementById('inputChar').value;
+        const indexes = [];
+        for (let i = 0; i < input.length; i++) {
+          if (input[i] === char) indexes.push(i);
+        }
+        document.getElementById(
+          'outputFindIndexes'
+        ).textContent = `Індекси: [${indexes.join(', ')}], Кількість: ${
+          indexes.length
+        }`;
+      }
+
+      // 2.3 Перший символ у верхньому регістрі
+      function capitalizeFirst() {
+        const input = document.getElementById('capitalizeInput').value;
+        const result = input.charAt(0).toUpperCase() + input.slice(1);
+        document.getElementById(
+          'outputCapitalizeFirst'
+        ).textContent = `Результат: ${result}`;
+      }
+
+      // 2.4 Підрахунок голосних
+      function countVowels() {
+        const input = document.getElementById('vowelsInput').value;
+        const vowels = 'aeiouаеіоуяию';
+        const count = input
+          .split('')
+          .filter(char => vowels.includes(char.toLowerCase())).length;
+        document.getElementById(
+          'outputCountVowels'
+        ).textContent = `Голосних: ${count}`;
+      }
+
+      // 2.5 Перевірка спаму
+      function checkSpam() {
+        const input = document.getElementById('spamInput').value.toLowerCase();
+        const spamWords = [
+          '100% безкоштовно',
+          'збільшення продажів',
+          'тільки сьогодні',
+          'не видаляйте',
+        ];
+        const isSpam = spamWords.some(word => input.includes(word));
+        document.getElementById(
+          'outputCheckSpam'
+        ).textContent = `Спам: ${isSpam}`;
+      }
+
+      // 2.6 Скорочення рядка
+      function truncateString() {
+        const input = document.getElementById('truncateInput').value;
+        const maxLength = parseInt(
+          document.getElementById('maxLength').value,
+          10
+        );
+        const result =
+          input.length > maxLength
+            ? input.slice(0, maxLength - 3) + '...'
+            : input;
+        document.getElementById(
+          'outputTruncate'
+        ).textContent = `Результат: ${result}`;
+      }
+    </script>
+
+    <h1>Завдання 3.</h1>
+
+    <!-- 3.1 Snake Case to Camel Case -->
+    <div class="section">
+      <h2>3.1 Snake Case в Camel Case</h2>
+      <input
+        type="text"
+        id="snakeCaseInput"
+        placeholder="Введіть змінні через кому (my_variable, new_brand_product)"
+      />
+      <button onclick="convertToCamelCase()">Перетворити</button>
+      <div class="output" id="outputCamelCase"></div>
+    </div>
+
+    <!-- 3.2 Camel Case to Snake Case -->
+    <div class="section">
+      <h2>3.2 Camel Case в Snake Case</h2>
+      <input
+        type="text"
+        id="camelCaseInput"
+        placeholder="Введіть змінні через кому (myVariable, newBrandProduct)"
+      />
+      <button onclick="convertToSnakeCase()">Перетворити</button>
+      <div class="output" id="outputSnakeCase"></div>
+    </div>
+
+    <!-- 3.3 Заміна формату дат -->
+    <div class="section">
+      <h2>3.3 Заміна формату дат</h2>
+      <textarea
+        id="dateTextInput"
+        rows="4"
+        cols="50"
+        placeholder="Введіть текст із датами формату yyyy/mm/dd"
+      ></textarea>
+      <button onclick="replaceDates()">Замінити формат дат</button>
+      <div class="output" id="outputDateText"></div>
+    </div>
+
+    <script>
+      // 3.1 Snake Case в Camel Case
+      function convertToCamelCase() {
+        const input = document.getElementById('snakeCaseInput').value;
+        const snakeCaseArray = input.split(',').map(str => str.trim());
+        const camelCaseArray = snakeCaseArray.map(str =>
+          str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())
+        );
+        document.getElementById(
+          'outputCamelCase'
+        ).textContent = `Вхідний масив: [${snakeCaseArray.join(
+          ', '
+        )}], Вихідний масив: [${camelCaseArray.join(', ')}]`;
+      }
+
+      // 3.2 Camel Case в Snake Case
+      function convertToSnakeCase() {
+        const input = document.getElementById('camelCaseInput').value;
+        const camelCaseArray = input.split(',').map(str => str.trim());
+        const snakeCaseArray = camelCaseArray.map(str =>
+          str.replace(/([A-Z])/g, '_$1').toLowerCase()
+        );
+        document.getElementById(
+          'outputSnakeCase'
+        ).textContent = `Вхідний масив: [${camelCaseArray.join(
+          ', '
+        )}], Вихідний масив: [${snakeCaseArray.join(', ')}]`;
+      }
+
+      // 3.3 Заміна формату дат
+      function replaceDates() {
+        const input = document.getElementById('dateTextInput').value;
+        const replacedText = input.replace(
+          /\b(\d{4})\/(\d{2})\/(\d{2})\b/g,
+          '$3.$2.$1'
+        );
+        document.getElementById(
+          'outputDateText'
+        ).textContent = `Результат: ${replacedText}`;
+      }
+    </script>
+  </body>
+</html>
