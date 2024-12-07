@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лабораторна робота з анімації</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+
+      canvas {
+        display: block;
+        margin: 20px auto;
+        border: 2px solid #121212;
+        background-color: #f0f0f0;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+
+    <h1>Завдання 1, 2</h1>
+    <canvas id="logoCanvas" width="800" height="600"></canvas>
+    <button id="startButton">Запустити анімацію</button>
+    <button id="stopButton">Зупинити анімацію</button>
+
+    <script>
+      // Налаштування Canvas
+      const canvas = document.getElementById('logoCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Параметри анімації
+      let animationRunning = false;
+      let animationFrame;
+
+      // Логотип 121
+      const logo = {
+        text: '121 Інженерія ПЗ',
+        x: 400,
+        y: 300,
+        fontSize: 24,
+        dx: 2,
+        dy: 2,
+        opacity: 1,
+        opacityDirection: -0.02,
+      };
+
+      // Коло
+      const circle = {
+        x: 100,
+        y: 100,
+        radius: 30,
+        dx: 3,
+        dy: 3,
+        color: 'blue',
+      };
+
+      // Квадрат
+      const square = {
+        x: 600,
+        y: 400,
+        size: 50,
+        dx: -2,
+        dy: -2,
+        color: 'green',
+      };
+
+      // Анімація логотипу
+      function drawLogo() {
+        ctx.font = `${logo.fontSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = `rgba(0, 0, 0, ${logo.opacity})`;
+        ctx.fillText(logo.text, logo.x, logo.y);
+
+        // Рух логотипу
+        logo.x += logo.dx;
+        logo.y += logo.dy;
+
+        // Зміна прозорості
+        logo.opacity += logo.opacityDirection;
+        if (logo.opacity <= 0 || logo.opacity >= 1) {
+          logo.opacityDirection *= -1;
+        }
+
+        // Відбивання від стін
+        if (logo.x < 0 || logo.x > canvas.width) logo.dx *= -1;
+        if (logo.y < 0 || logo.y > canvas.height) logo.dy *= -1;
+      }
+
+      // Анімація кола
+      function drawCircle() {
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+        ctx.fillStyle = circle.color;
+        ctx.fill();
+
+        // Рух кола
+        circle.x += circle.dx;
+        circle.y += circle.dy;
+
+        // Відбивання від стін
+        if (
+          circle.x - circle.radius < 0 ||
+          circle.x + circle.radius > canvas.width
+        )
+          circle.dx *= -1;
+        if (
+          circle.y - circle.radius < 0 ||
+          circle.y + circle.radius > canvas.height
+        )
+          circle.dy *= -1;
+      }
+
+      // Анімація квадрата
+      function drawSquare() {
+        ctx.fillStyle = square.color;
+        ctx.fillRect(square.x, square.y, square.size, square.size);
+
+        // Рух квадрата
+        square.x += square.dx;
+        square.y += square.dy;
+
+        // Відбивання від стін
+        if (square.x < 0 || square.x + square.size > canvas.width)
+          square.dx *= -1;
+        if (square.y < 0 || square.y + square.size > canvas.height)
+          square.dy *= -1;
+      }
+
+      // Основна функція анімації
+      function animate() {
+        if (!animationRunning) return;
+
+        // Очистка Canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Виклик функцій анімації
+        drawLogo();
+        drawCircle();
+        drawSquare();
+
+        // Наступний кадр
+        animationFrame = requestAnimationFrame(animate);
+      }
+
+      // Запуск анімації
+      document.getElementById('startButton').addEventListener('click', () => {
+        if (!animationRunning) {
+          animationRunning = true;
+          animate();
+        }
+      });
+
+      // Зупинка анімації
+      document.getElementById('stopButton').addEventListener('click', () => {
+        animationRunning = false;
+        cancelAnimationFrame(animationFrame);
+      });
+
+      // Автоматична зупинка через 10 секунд
+      setTimeout(() => {
+        animationRunning = false;
+        cancelAnimationFrame(animationFrame);
+      }, 10000);
+    </script>
+  </body>
+</html>
