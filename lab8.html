@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Лабораторна робота</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      input,
+      button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 1em;
+      }
+
+      .output {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+
+    <h1>Завдання 1.</h1>
+
+    <!-- Завдання 1 -->
+    <div class="section">
+      <h2>Завдання 1. Робота з об'єктом часу</h2>
+      <div>
+        <button onclick="showCurrentTime()">1.1 Показати поточний час</button>
+        <div class="output" id="currentTimeOutput"></div>
+      </div>
+      <div>
+        <input type="number" id="addSeconds" placeholder="Додати секунд" />
+        <button onclick="changeSeconds()">1.2 Додати секунди</button>
+      </div>
+      <div>
+        <input type="number" id="addMinutes" placeholder="Додати хвилин" />
+        <button onclick="changeMinutes()">1.3 Додати хвилини</button>
+      </div>
+      <div>
+        <input type="number" id="addHours" placeholder="Додати годин" />
+        <button onclick="changeHours()">1.4 Додати години</button>
+      </div>
+      <div class="output" id="timeChangeOutput"></div>
+    </div>
+    <h1>Завдання 2.</h1>
+
+    <!-- Завдання 2.1 -->
+    <div class="section">
+      <h2>Завдання 2.1. Виведення поточної дати, дня тижня і часу</h2>
+      <button onclick="showCurrentDate()">Виконати</button>
+      <div class="output" id="currentDateOutput"></div>
+    </div>
+
+    <!-- Завдання 2.2 -->
+    <div class="section">
+      <h2>Завдання 2.2. Виведення дня і номера тижня</h2>
+      <button onclick="showDayInfo()">Виконати</button>
+      <div class="output" id="dayInfoOutput"></div>
+    </div>
+
+    <!-- Завдання 2.3 -->
+    <div class="section">
+      <h2>Завдання 2.3. Дата N днів назад або вперед</h2>
+      <input type="number" id="daysInput" placeholder="Введіть N днів" />
+      <button onclick="calculateDate()">Обчислити</button>
+      <div class="output" id="dateCalculationOutput"></div>
+    </div>
+
+    <!-- Завдання 2.4 -->
+    <div class="section">
+      <h2>Завдання 2.4. Останній день місяця</h2>
+      <input type="number" id="yearInput" placeholder="Рік" />
+      <input type="number" id="monthInput" placeholder="Місяць (1-12)" />
+      <button onclick="lastDayOfMonth()">Визначити</button>
+      <div class="output" id="lastDayOutput"></div>
+    </div>
+
+    <!-- Завдання 2.5 -->
+    <div class="section">
+      <h2>Завдання 2.5. Секунди від початку дня і до наступного дня</h2>
+      <button onclick="calculateSeconds()">Розрахувати</button>
+      <div class="output" id="secondsOutput"></div>
+    </div>
+
+    <!-- Завдання 2.6 -->
+    <div class="section">
+      <h2>Завдання 2.6. Аналіз введеного часу</h2>
+      <input type="text" id="dateTimeInput" placeholder="дд.мм.рррр год:хв" />
+      <button onclick="analyzeDate()">Аналізувати</button>
+      <div class="output" id="dateAnalysisOutput"></div>
+    </div>
+
+    <script>
+      // Завдання 1: Об'єкт часу
+      const time = { hours: 0, minutes: 0, seconds: 0 };
+
+      function showCurrentTime() {
+        const now = new Date();
+        time.hours = now.getHours();
+        time.minutes = now.getMinutes();
+        time.seconds = now.getSeconds();
+        document.getElementById(
+          'currentTimeOutput'
+        ).textContent = `Поточний час: ${time.hours}:${time.minutes}:${time.seconds}`;
+      }
+
+      function changeSeconds() {
+        const secondsToAdd =
+          parseInt(document.getElementById('addSeconds').value) || 0;
+        const now = new Date();
+        now.setSeconds(now.getSeconds() + secondsToAdd);
+        time.hours = now.getHours();
+        time.minutes = now.getMinutes();
+        time.seconds = now.getSeconds();
+        document.getElementById(
+          'timeChangeOutput'
+        ).textContent = `Новий час: ${time.hours}:${time.minutes}:${time.seconds}`;
+      }
+
+      function changeMinutes() {
+        const minutesToAdd =
+          parseInt(document.getElementById('addMinutes').value) || 0;
+        const now = new Date();
+        now.setMinutes(now.getMinutes() + minutesToAdd);
+        time.hours = now.getHours();
+        time.minutes = now.getMinutes();
+        time.seconds = now.getSeconds();
+        document.getElementById(
+          'timeChangeOutput'
+        ).textContent = `Новий час: ${time.hours}:${time.minutes}:${time.seconds}`;
+      }
+
+      function changeHours() {
+        const hoursToAdd =
+          parseInt(document.getElementById('addHours').value) || 0;
+        const now = new Date();
+        now.setHours(now.getHours() + hoursToAdd);
+        time.hours = now.getHours();
+        time.minutes = now.getMinutes();
+        time.seconds = now.getSeconds();
+        document.getElementById(
+          'timeChangeOutput'
+        ).textContent = `Новий час: ${time.hours}:${time.minutes}:${time.seconds}`;
+      }
+
+      // Завдання 2.1: Поточна дата, день тижня, час
+      function showCurrentDate() {
+        const now = new Date();
+        const days = [
+          'неділя',
+          'понеділок',
+          'вівторок',
+          'середа',
+          'четвер',
+          'п’ятниця',
+          'субота',
+        ];
+        const formattedDate = `Дата: ${now.getDate()} ${now.toLocaleString(
+          'uk',
+          { month: 'long' }
+        )} ${now.getFullYear()} року`;
+        const day = `День тижня: ${days[now.getDay()]}`;
+        const time = `Час: ${now.getHours()}:${String(
+          now.getMinutes()
+        ).padStart(2, '0')}`;
+        document.getElementById(
+          'currentDateOutput'
+        ).textContent = `${formattedDate}, ${day}, ${time}`;
+      }
+
+      // Завдання 2.2: Інформація про день тижня
+      function showDayInfo() {
+        const now = new Date();
+        const days = [
+          'неділя',
+          'понеділок',
+          'вівторок',
+          'середа',
+          'четвер',
+          'п’ятниця',
+          'субота',
+        ];
+        const dayInfo = {
+          dayNumber: now.getDay() === 0 ? 7 : now.getDay(),
+          dayName: days[now.getDay()],
+        };
+        document.getElementById(
+          'dayInfoOutput'
+        ).textContent = `Номер дня тижня: ${dayInfo.dayNumber}, Назва дня тижня: ${dayInfo.dayName}`;
+      }
+
+      // Завдання 2.3: Дата N днів назад або вперед
+      function calculateDate() {
+        const days = parseInt(document.getElementById('daysInput').value) || 0;
+        const now = new Date();
+        now.setDate(now.getDate() + days);
+        document.getElementById(
+          'dateCalculationOutput'
+        ).textContent = `Обчислена дата: ${now.toLocaleDateString('uk')}`;
+      }
+
+      // Завдання 2.4: Останній день місяця
+      function lastDayOfMonth() {
+        const year = parseInt(document.getElementById('yearInput').value);
+        const month = parseInt(document.getElementById('monthInput').value);
+        const date = new Date(year, month, 0);
+        document.getElementById(
+          'lastDayOutput'
+        ).textContent = `Останній день місяця: ${date.getDate()}`;
+      }
+
+      // Завдання 2.5: Секунди від початку і до кінця дня
+      function calculateSeconds() {
+        const now = new Date();
+        const startOfDay = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+        const endOfDay = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate() + 1
+        );
+        const secondsSinceStart = Math.floor((now - startOfDay) / 1000);
+        const secondsUntilEnd = Math.floor((endOfDay - now) / 1000);
+        document.getElementById(
+          'secondsOutput'
+        ).textContent = `Секунд від початку дня: ${secondsSinceStart}, Секунд до кінця дня: ${secondsUntilEnd}`;
+      }
+
+      // Завдання 2.6: Аналіз введеного часу
+      function analyzeDate() {
+        const input = document.getElementById('dateTimeInput').value;
+        const [datePart, timePart] = input.split(' ');
+        const [day, month, year] = datePart.split('.').map(Number);
+        const [hours, minutes] = timePart.split(':').map(Number);
+        const inputDate = new Date(year, month - 1, day, hours, minutes);
+        const now = new Date();
+        const diffSeconds = Math.floor((now - inputDate) / 1000);
+
+        let result;
+        if (diffSeconds < 60) {
+          result = `${diffSeconds} сек. назад`;
+        } else if (diffSeconds < 3600) {
+          result = `${Math.floor(diffSeconds / 60)} хв. назад`;
+        } else {
+          result = input;
+        }
+
+        document.getElementById(
+          'dateAnalysisOutput'
+        ).textContent = `Результат: ${result}`;
+      }
+    </script>
+  </body>
+</html>
