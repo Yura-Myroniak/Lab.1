@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Методи jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .highlight {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+    <style>
+      .box {
+        width: 200px;
+        height: 100px;
+        padding: 10px;
+        margin: 20px;
+        border: 2px solid black;
+      }
+    </style>
+    <style>
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid black;
+      }
+
+      .highlight {
+        background-color: lightblue;
+        font-weight: bold;
+      }
+    </style>
+    <style>
+      .container {
+        padding: 10px;
+        border: 1px solid #000;
+        margin: 10px 0;
+      }
+      .highlight {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../index.html">return back</a>
+    <h1>Завдання 1.</h1>
+
+    <h1 id="header">Кульбаба</h1>
+    <p id="paragraph">Демонстрації методів.</p>
+    <input type="text" id="inputField" value="Початкове значення" />
+    <button id="changeText">Змінити текст</button>
+    <button id="changeStyle">Змінити стиль</button>
+    <button id="getValue">Отримати значення</button>
+    <button id="changeAttr">Змінити атрибут</button>
+    <button id="removeAttr">Видалити атрибут</button>
+    <script>
+      $(document).ready(function () {
+        // Метод .html() - отримання та встановлення HTML
+        $('#changeText').on('click', function () {
+          $('#header').html('<strong>Новий заголовок</strong>');
+        });
+
+        // Метод .css() - зміна стилю елемента
+        $('#changeStyle').on('click', function () {
+          $('#paragraph').css({
+            color: 'blue',
+            'font-size': '20px',
+          });
+        });
+
+        // Метод .val() - отримання та встановлення значення
+        $('#getValue').on('click', function () {
+          let value = $('#inputField').val();
+          alert('Поточне значення: ' + value);
+          $('#inputField').val('Нове значення');
+        });
+
+        // Метод .attr() - робота з атрибутами
+        $('#changeAttr').on('click', function () {
+          // Отримання значення атрибуту
+          alert('Поточний атрибут class: ' + $('#paragraph').attr('class'));
+
+          // Встановлення атрибуту
+          $('#paragraph').attr('class', 'highlight');
+
+          // Встановлення кількох атрибутів
+          $('#header').attr({
+            'data-role': 'main-header',
+            title: 'Новий заголовок',
+          });
+
+          // Використання функції для атрибуту
+          $('#paragraph').attr('data-length', function () {
+            return $('#paragraph').text().length;
+          });
+        });
+
+        // Метод .removeAttr() - видалення атрибуту
+        $('#removeAttr').on('click', function () {
+          $('#paragraph').removeAttr('class');
+          alert('Клас видалено.');
+        });
+      });
+    </script>
+
+    <h1>Завдання 2.</h1>
+
+    <div class="container">
+      <div class="box" id="box1">Box 1</div>
+      <div class="box" id="box2">Box 2</div>
+    </div>
+    <button id="addAfter">Додати після</button>
+    <button id="removeElement">Видалити елемент</button>
+    <button id="showInnerHeight">Показати innerHeight</button>
+    <button id="showOuterHeight">Показати outerHeight</button>
+
+    <script>
+      $(document).ready(function () {
+        // Метод .after(): додає елемент після існуючого
+        $('#addAfter').on('click', function () {
+          $('#box1').after('<div class="box" id="box3">Box 3</div>');
+        });
+
+        // Метод .remove(): видаляє елемент із DOM
+        $('#removeElement').on('click', function () {
+          $('#box2').remove();
+        });
+
+        // Метод .innerHeight(): отримання внутрішньої висоти (з урахуванням padding)
+        $('#showInnerHeight').on('click', function () {
+          const innerHeight = $('#box1').innerHeight();
+          alert('Inner height Box 1: ' + innerHeight + 'px');
+        });
+
+        // Метод .outerHeight(): отримання зовнішньої висоти (з урахуванням padding і border)
+        $('#showOuterHeight').on('click', function () {
+          const outerHeight = $('#box1').outerHeight();
+          alert('Outer height Box 1: ' + outerHeight + 'px');
+        });
+      });
+    </script>
+
+    <h1>Завдання 3.</h1>
+    <ul class="list">
+      <li>Елемент 1</li>
+      <li>Елемент 2</li>
+      <li>Елемент 3</li>
+      <li>Елемент 4</li>
+      <li>Елемент 5</li>
+    </ul>
+    <button id="btn-end">.end()</button>
+    <button id="btn-nextAll">.nextAll()</button>
+    <button id="btn-prevUntil">.prevUntil()</button>
+    <button id="btn-eq">.eq()</button>
+    <button id="btn-prev">.prev()</button>
+
+    <script>
+      $(document).ready(function () {
+        // Очищення виділень перед виконанням кожної дії
+        $('button').on('click', function () {
+          $('.list li').removeClass('highlight');
+        });
+
+        // Метод .end()
+        $('#btn-end').on('click', function () {
+          $('.list li') // Вибираємо всі елементи списку
+            .first()
+            .addClass('highlight') // Виділяємо перший елемент
+            .next()
+            .addClass('highlight') // Виділяємо наступний елемент
+            .end() // Повертаємося до початкового набору
+            .last()
+            .addClass('highlight'); // Виділяємо останній елемент
+        });
+
+        // Метод .nextAll()
+        $('#btn-nextAll').on('click', function () {
+          $('.list li').eq(1).nextAll().addClass('highlight'); // Виділяємо всі елементи після другого
+        });
+
+        // Метод .prevUntil()
+        $('#btn-prevUntil').on('click', function () {
+          $('.list li')
+            .last()
+            .prevUntil('.list li:eq(1)')
+            .addClass('highlight'); // Виділяємо всі попередні до другого
+        });
+
+        // Метод .eq()
+        $('#btn-eq').on('click', function () {
+          $('.list li').eq(3).addClass('highlight'); // Виділяємо четвертий елемент списку
+        });
+
+        // Метод .prev()
+        $('#btn-prev').on('click', function () {
+          $('.list li').eq(3).prev().addClass('highlight'); // Виділяємо попередній елемент до четвертого
+        });
+      });
+    </script>
+
+    <h1>Завдання 4.</h1>
+    <ul>
+      <li class="item">футбол</li>
+      <li class="item">волейбол</li>
+      <li class="item">баскетбол</li>
+      <li class="item">теніс</li>
+      <li class="item">більярд</li>
+      <li class="item">плавання</li>
+    </ul>
+    <button id="btn-class">Виділити всі елементи з класом</button>
+    <button id="btn-third">Виділити кожен третій елемент</button>
+
+    <script>
+      $(document).ready(function () {
+        // Додавання стилів і тексту "modify" для всіх елементів з класом "item"
+        $('#btn-class').on('click', function () {
+          $('.item')
+            .filter(function () {
+              return $(this).hasClass('item');
+            })
+            .addClass('highlight')
+            .append(' (modify)');
+        });
+
+        // Додавання стилів і тексту "modify" для кожного третього елемента <li>
+        $('#btn-third').on('click', function () {
+          $('li')
+            .filter(function (index) {
+              return (index + 1) % 3 === 0; // Кожен третій елемент
+            })
+            .addClass('highlight')
+            .append(' (modify)');
+        });
+      });
+    </script>
+
+    <h1>Завдання 5.</h1>
+    <div id="parent" class="container">
+      <p>Цей елемент містить інший елемент</p>
+      <div id="child" class="container">Це внутрішній елемент</div>
+    </div>
+
+    <ul id="list">
+      <li>Елемент 1</li>
+      <li>Елемент 2</li>
+      <li>Елемент 3</li>
+    </ul>
+
+    <button id="btn-grep">$.grep()</button>
+    <button id="btn-inArray">$.inArray()</button>
+    <button id="btn-contains">$.contains()</button>
+    <button id="btn-data">$.data()</button>
+
+    <script>
+      $(document).ready(function () {
+        // Метод $.grep() - фільтрує масив на основі функції
+        $('#btn-grep').on('click', function () {
+          const numbers = [1, 2, 3, 4, 5, 6];
+          const evenNumbers = $.grep(numbers, function (n) {
+            return n % 2 === 0; // Залишаємо лише парні числа
+          });
+          alert('Парні числа: ' + evenNumbers.join(', '));
+        });
+
+        // Метод $.inArray() - перевіряє, чи є елемент у масиві
+        $('#btn-inArray').on('click', function () {
+          const fruits = ['яблуко', 'груша', 'банан'];
+          const index = $.inArray('груша', fruits);
+          if (index !== -1) {
+            alert('"груша" знайдена на позиції: ' + index);
+          } else {
+            alert('"груша" не знайдена');
+          }
+        });
+
+        // Метод $.contains() - перевіряє, чи містить елемент інший елемент
+        $('#btn-contains').on('click', function () {
+          if ($.contains($('#parent')[0], $('#child')[0])) {
+            alert('Елемент #parent містить елемент #child');
+          } else {
+            alert('Елемент #parent НЕ містить елемент #child');
+          }
+        });
+
+        // Метод $.data() - робота з користувацькими даними
+        $('#btn-data').on('click', function () {
+          $('#list li').eq(0).data('info', 'Це перший елемент списку');
+          $('#list li').eq(1).data('info', 'Це другий елемент списку');
+
+          alert($('#list li').eq(0).data('info')); // Виводить "Це перший елемент списку"
+          alert($('#list li').eq(1).data('info')); // Виводить "Це другий елемент списку"
+        });
+      });
+    </script>
+  </body>
+</html>
