@@ -80,23 +80,19 @@
       <button type="button" onclick="validateForm()">Перевірити</button>
     </form>
     <script>
-      // Валідація форми
       function validateForm() {
-        // Правила
         const emailPattern = /^[a-z0-9._%+-]+@pnu\.edu\.ua$/i;
         const namePattern = /^[A-ZА-Я][a-zа-я]+ [A-ZА-Я]+$/;
         const loginPattern = /^[a-z]+$/i;
         const passwordPattern = /^(?=.*[a-z])(?=.*\d)(?=.*[-_!@#$%^&*]).{8,}$/;
         const zipcodePattern = /^\d{5}$/;
 
-        // Поля
         const email = document.getElementById('email');
         const name = document.getElementById('name');
         const login = document.getElementById('login');
         const password = document.getElementById('password');
         const zipcode = document.getElementById('zipcode');
 
-        // Повідомлення
         const emailMessage = document.getElementById('emailMessage');
         const nameMessage = document.getElementById('nameMessage');
         const loginMessage = document.getElementById('loginMessage');
@@ -136,7 +132,6 @@
         );
       }
 
-      // Функція для валідації поля
       function validateField(field, pattern, messageElement, errorMessage) {
         if (pattern.test(field.value)) {
           field.classList.remove('invalid');

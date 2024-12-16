@@ -57,7 +57,7 @@ function task5() {
 
   alert(`Сума ряду: ${sum}`);
 }
-const products = ['Окуляри', 'Олівці', 'Картини', 'Краб'];
+const products = ['Юхта', 'Юпітер', 'Мандаринка', 'Міксер'];
 const quantities = [10, 500, 20, 15];
 const prices = [1000, 10, 800, 300];
 
